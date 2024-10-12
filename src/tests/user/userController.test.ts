@@ -1,6 +1,4 @@
-const request = require('supertest');
 const userController = require('../../controllers/userController');
-const app = require('../../app');
 const logic = require('../../businessLogic/userLogic');
 import {User} from '../../domain/user';
 
