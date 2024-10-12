@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../domain/user';
-import { DomainError, ServiceError } from '../utils/errors';
+import { DomainError, LogicError, ServiceError } from '../utils/errors';
 import * as userLogic  from '../businessLogic/userLogic'; 
 
 export const register = async(req: Request, res: Response) =>{
@@ -15,7 +15,7 @@ export const register = async(req: Request, res: Response) =>{
         const createdUser = await userLogic.createUser(newUser); 
         res
             .status(201)
-            .json({createdUser}); 
+            .json(createdUser); 
         return;
     }catch(error: any){
         if(error instanceof DomainError){
@@ -31,12 +31,30 @@ export const register = async(req: Request, res: Response) =>{
             return;
         }
         res
-            .status(400)
+            .status(500)
             .json(error.message);
         return;
     }
    
 }
 export const login = async(req: Request, res: Response) =>{
+    try{
+        const { email,password } = req.body;
+        const loggedInUser = await userLogic.getUser(email, password);
+        res
+            .status(201)
+            .json(loggedInUser);
 
+    }catch(error: any){
+        if(error instanceof LogicError){
+            res
+            .status(403)
+            .json(error.message);
+            return;
+        }
+        res
+            .status(500)
+            .json(error.message);
+        return;
+    }
 }

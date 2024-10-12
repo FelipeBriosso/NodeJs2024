@@ -1,1 +1,3 @@
 {"email":"email@yo.com","password":"SecretPs1234","firstname":"1","lastname":"1"}
+{"email":"email2@yo.com","password":"SecretPs1234","firstname":"1","lastname":"1"}
+{"email":"email3@yo.com","password":"SecretPs1234","firstname":"1","lastname":"1"}

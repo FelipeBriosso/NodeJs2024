@@ -9,3 +9,7 @@ export const createUser = async(newUser: User) =>{
         throw error;
     }
 }
+
+export const getUser = async (email:string, password:string) => {
+    
+}
