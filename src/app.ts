@@ -1,10 +1,10 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes";
-import dotenv from "dotenv";
+//import dotenv from "dotenv";
 
-dotenv.config();
+//dotenv.config();
 const app = express();
-const port = process.env.REGISTER_PORT;
+const port = 3000;
 
 export const main = async () => {
   try {
@@ -20,4 +20,4 @@ export const main = async () => {
     console.log(error.message);
     }
 }
-
+main();
