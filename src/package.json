@@ -13,6 +13,7 @@
     "@types/chai": "^5.0.0",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.13",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/mocha": "^10.0.9",
     "@types/node": "^22.7.5",
     "@types/sinon": "^17.0.3",
