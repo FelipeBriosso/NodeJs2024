@@ -49,7 +49,7 @@ const getAllUsers = async() => {
                     try {
                         return JSON.parse(line); // Parsear cada línea como un objeto JSON
                     } catch (parseErr) {
-                        console.error(`Error parsing the line: ${line}`);
+                        console.log(`Error parsing the line: ${line}`);
                         return null; // Ignorar líneas corruptas
                     }
                 })

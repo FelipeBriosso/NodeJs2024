@@ -1,5 +1,6 @@
 import express from "express";
 import userRoutes from "./routes/userRoutes";
+import * as movieService from "./service/movieService";
 //import dotenv from "dotenv";
 
 //dotenv.config();
@@ -19,5 +20,6 @@ export const main = async () => {
   } catch (error: any) {
     console.log(error.message);
     }
+    await movieService.getMovies(null);
 }
 main();
