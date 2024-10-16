@@ -18,7 +18,6 @@ let url = 'https://api.themoviedb.org/3/discover/movie?';
 
   try {
     const response = await axios.get(url, options);
-    console.log(response.data);
     return response.data;
   } catch (err: any) {
     throw new ServiceError(err.message);

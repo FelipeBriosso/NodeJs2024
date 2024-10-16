@@ -23,7 +23,7 @@ describe('getMovies', () => {
 
     // Expect axios.get to have been called with the correct URL and headers
     expect(axios.get).toHaveBeenCalledWith(
-      'https://api.themoviedb.org/3/discover/movie?language=en-US&page=1',
+      'https://api.themoviedb.org/3/discover/movie?',
       {
         headers: {
           accept: 'application/json',
@@ -47,7 +47,7 @@ describe('getMovies', () => {
 
     // Expect axios.get to have been called with the keyword in the URL
     expect(axios.get).toHaveBeenCalledWith(
-      'https://api.themoviedb.org/3/discover/movie?language=en-US&page=1&with_keywords=12345',
+      'https://api.themoviedb.org/3/discover/movie?with_keywords=12345',
       {
         headers: {
           accept: 'application/json',
