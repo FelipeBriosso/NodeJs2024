@@ -11,10 +11,12 @@ export const verifyToken = async (req: Request, res: Response, next: any): Promi
       res.status(401).json("authentication is required");
       return;
     }
-    const decoded = jsonwebtoken.verify(sessionToken, process.env.JWT as string);
-    if(!decoded){
-        res.status(401).json("authentication is required");
+    try{
+      jsonwebtoken.verify(sessionToken, process.env.JWT as string);
+      next();
+    }catch(error){
+      res.status(401).json("authentication is required");
         return;
-    }
-    next();
+    } 
+
 };

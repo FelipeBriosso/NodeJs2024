@@ -34,7 +34,8 @@ describe('verifyToken middleware', () => {
   it('should return 403 if token is invalid', async () => {
     (req.header as jest.Mock).mockReturnValue('Bearer invalidToken'); // Simular un token inválido
 
-    (jwt.verify as jest.Mock).mockReturnValue(null);
+    (jwt.verify as jest.Mock).mockImplementation(() =>
+         {throw new Error("error")});
 
     await verifyToken(req as Request, res as Response, next);
 
