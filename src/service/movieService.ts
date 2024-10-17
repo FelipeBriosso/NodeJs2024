@@ -23,3 +23,7 @@ let url = 'https://api.themoviedb.org/3/discover/movie?';
     throw new ServiceError(err.message);
   }
 };
+
+export const getMoviesByTitle = async (title: string) =>{
+  return [];
+}
