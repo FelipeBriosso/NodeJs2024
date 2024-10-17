@@ -2,6 +2,7 @@ import { FavoriteMovie } from '../domain/favoriteMovie';
 import * as movieService from '../service/movieService';
 import * as favoriteMovieService from '../service/favoriteMovieService';
 import { LogicError } from '../utils/errors';
+
 export const postFavoriteMovie = async (movie: FavoriteMovie) => {
     const posibleMovies: any[] = await movieService.getMoviesByTitle(movie.title);
     if(!isValidMovie(movie,posibleMovies)){
@@ -11,6 +12,6 @@ export const postFavoriteMovie = async (movie: FavoriteMovie) => {
     return {id:savedMovie.id, title:savedMovie.title, addedAt:savedMovie.addedAt};
 }   
 
-function isValidMovie(movie: FavoriteMovie, posibleMovies: any[]) {
-return posibleMovies.some(posibleMovie => posibleMovie.id === movie.id && posibleMovie.title === movie.title);
+function isValidMovie(movie: FavoriteMovie, posibleMovies: any) {
+        return posibleMovies.results.some((posibleMovie:any) => posibleMovie.id === movie.id && posibleMovie.title === movie.title);
 }

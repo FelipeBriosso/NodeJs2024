@@ -20,7 +20,7 @@ describe('postFavoriteMovie', () => {
     });
 
     it('should save the movie when the movie is valid', async () => {
-        const possibleMovies = [{ id: 1, title: "Inception" }];
+        const possibleMovies = {results:[{ id: 1, title: "Inception" }]};
 
         // Mock the movieService.getMoviesByTitle method
         (movieService.getMoviesByTitle as jest.Mock).mockResolvedValue(possibleMovies);
@@ -45,7 +45,7 @@ describe('postFavoriteMovie', () => {
     });
 
     it('should throw LogicError when movie is invalid', async () => {
-        const possibleMovies = [{ id: "2", title: "Some Other Movie" }];
+        const possibleMovies = {results:[{ id: "2", title: "Some Other Movie" }]};
 
         // Mock the movieService.getMoviesByTitle method
         (movieService.getMoviesByTitle as jest.Mock).mockResolvedValue(possibleMovies);
