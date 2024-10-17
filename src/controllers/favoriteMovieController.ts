@@ -5,10 +5,10 @@ import  { FavoriteMovie }  from '../domain/favoriteMovie';
 
 export const postFavoriteMovie = async (req: Request, res: Response) => {
     try{
-        const {id, ownScore,email} = req.body;
+        const {id, title,email} = req.body;
         const movie = new FavoriteMovie(
             id,
-            Number(ownScore),
+            title,
             email
         );
         const favoriteMovie = await favoriteMovieLogic.postFavoriteMovie(movie);

@@ -25,13 +25,13 @@ describe('postFavoriteMovies', () => {
         req = {
             body: {
                 id: 1,
-                ownScore: 95,
+                title: "inception",
                 email: "user@example.com",
             },
         };
         const favoriteMovie = new FavoriteMovie(
             1,
-            95,
+            "inception",
             "user@example.com"
         );
 
@@ -49,7 +49,7 @@ describe('postFavoriteMovies', () => {
         req = {
             body: {
                 id: "",
-                ownScore: 95,
+                title: "inception",
                 email: "user@example.com",
             },
         };
@@ -62,15 +62,15 @@ describe('postFavoriteMovies', () => {
         expect(res.json).toHaveBeenCalledWith(errorMessage);
     });
 
-    it('should return 404 if DomainError invalid ownScore is thrown', async () => {
+    it('should return 404 if DomainError invalid title is thrown', async () => {
         req = {
             body: {
                 id: 1,
-                ownScore: -5,
+                title: "",
                 email: "user@example.com",
             },
         };
-        const errorMessage = "own score must be a valid number";
+        const errorMessage = "Movie title is required";
 
         await favoriteMovieController.postFavoriteMovie(req as Request, res as Response);
 
@@ -78,29 +78,14 @@ describe('postFavoriteMovies', () => {
         expect(res.status).toHaveBeenCalledWith(404);
         expect(res.json).toHaveBeenCalledWith(errorMessage);
     });
-    it('should return 404 if DomainError invalid ownScore is thrown', async () => {
-        req = {
-            body: {
-                id: 1,
-                ownScore: 105,
-                email: "user@example.com",
-            },
-        };
-        const errorMessage = "own score must be a valid number";
 
-        await favoriteMovieController.postFavoriteMovie(req as Request, res as Response);
-
-        // Verify that the response status and JSON were called correctly
-        expect(res.status).toHaveBeenCalledWith(404);
-        expect(res.json).toHaveBeenCalledWith(errorMessage);
-    });
 
 
     it('should return 404 if DomainError no email is thrown', async () => {
         req = {
             body: {
                 id: 1,
-                ownScore: 95,
+                title: "inception",
                 email: "",
             },
         };
@@ -117,7 +102,7 @@ describe('postFavoriteMovies', () => {
         req = {
             body: {
                 id: 1,
-                ownScore: 95,
+                title: "inception",
                 email: "user@example.com",
             },
         };
@@ -137,7 +122,7 @@ describe('postFavoriteMovies', () => {
         req = {
             body: {
                 id: 1,
-                ownScore: 95,
+                title: "inception",
                 email: "user@example.com",
             },
         };
