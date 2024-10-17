@@ -1,6 +1,7 @@
-import express from "express";
-import userRoutes from "./routes/userRoutes";
-import movieRoutes from "./routes/movieRoutes";
+import express from 'express';
+import userRoutes from './routes/userRoutes';
+import movieRoutes from './routes/movieRoutes';
+import favoriteMovieRoutes from './routes/favoriteMovieRoutes';
 //import dotenv from "dotenv";
 
 //dotenv.config();
@@ -15,6 +16,7 @@ export const main = async () => {
 
     app.use(userRoutes);
     app.use(movieRoutes);
+    app.use(favoriteMovieRoutes);
     app.listen(port, async () => {
     console.log(`Server running on http://localhost:${port}`);
     });
