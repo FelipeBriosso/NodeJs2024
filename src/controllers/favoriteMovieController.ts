@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as favoriteMovieLogic from '../businessLogic/favoriteMovieLogic';
-import { DomainError, ServiceError } from '../utils/errors';
+import { DomainError, LogicError, ServiceError } from '../utils/errors';
 import  { FavoriteMovie }  from '../domain/favoriteMovie';
 
 export const postFavoriteMovie = async (req: Request, res: Response) => {
@@ -15,6 +15,10 @@ export const postFavoriteMovie = async (req: Request, res: Response) => {
         res.status(201).json(favoriteMovie);
     }catch(error: any){
         if(error instanceof DomainError){
+            res.status(404).json(error.message);
+            return;
+        }
+        if(error instanceof LogicError){
             res.status(404).json(error.message);
             return;
         }

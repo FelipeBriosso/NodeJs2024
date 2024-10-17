@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import * as favoriteMovieController from '../../controllers/favoriteMovieController';
 import * as favoriteMovieLogic from '../../businessLogic/favoriteMovieLogic';
-import { DomainError, ServiceError } from '../../utils/errors';
+import { DomainError, LogicError, ServiceError } from '../../utils/errors';
 import { FavoriteMovie } from '../../domain/favoriteMovie';
 
 jest.mock('../../businessLogic/favoriteMovieLogic');
@@ -118,6 +118,25 @@ describe('postFavoriteMovies', () => {
         expect(res.json).toHaveBeenCalledWith(errorMessage);
     });
 
+    it('should return 404 if logicError is thrown', async () => {
+        req = {
+            body: {
+                id: 1,
+                title: "inception",
+                email: "user@example.com",
+            },
+        };
+        const errorMessage = "Logic error occurred";
+
+        // Mock the favoriteMovieLogic.postFavoriteMovies method to throw a ServiceError
+        (favoriteMovieLogic.postFavoriteMovie as jest.Mock).mockRejectedValue(new LogicError(errorMessage));
+
+        await favoriteMovieController.postFavoriteMovie(req as Request, res as Response);
+
+        // Verify that the response status and JSON were called correctly
+        expect(res.status).toHaveBeenCalledWith(404);
+        expect(res.json).toHaveBeenCalledWith(errorMessage);
+    });
     it('should return 500 if an unexpected error is thrown', async () => {
         req = {
             body: {
