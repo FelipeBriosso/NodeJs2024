@@ -12,7 +12,6 @@ export const createUser = async (user: User) => {
         const usuarioJson = JSON.stringify(user); // JSON en una sola línea
 
         await fs.appendFile(rutaArchivo, usuarioJson + '\n'); // Escribir en el archivo de forma asíncrona
-        console.log('Usuario guardado correctamente');
         return user;
 
     } catch (err: any) {
@@ -49,7 +48,6 @@ const getAllUsers = async() => {
                     try {
                         return JSON.parse(line); // Parsear cada línea como un objeto JSON
                     } catch (parseErr) {
-                        console.log(`Error parsing the line: ${line}`);
                         return null; // Ignorar líneas corruptas
                     }
                 })

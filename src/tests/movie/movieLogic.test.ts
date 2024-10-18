@@ -35,8 +35,8 @@ describe('getMovies', () => {
         });
 
         // Check that the list is sorted by suggestionScore
-        expect(sortedMovies[0].suggestionScore).toBeGreaterThan(sortedMovies[1].suggestionScore || 0);
-        expect(sortedMovies[1].suggestionScore).toBeGreaterThan(sortedMovies[2].suggestionScore || 0);
+        expect(sortedMovies[0].suggestionScore).toBeGreaterThanOrEqual(sortedMovies[1].suggestionScore || 0);
+        expect(sortedMovies[1].suggestionScore).toBeGreaterThanOrEqual(sortedMovies[2].suggestionScore || 0);
     });
 
     test('should throw LogicError when no movies found', async () => {

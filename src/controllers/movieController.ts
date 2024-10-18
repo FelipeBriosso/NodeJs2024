@@ -15,3 +15,4 @@ export const getMovies = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error retrieving movies', error });
     }
 };
+

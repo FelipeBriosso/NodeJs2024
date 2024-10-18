@@ -13,6 +13,7 @@ describe('verifyToken middleware', () => {
   beforeEach(() => {
     req = {
       header: jest.fn(),
+      body:jest.fn(),
     };
     res = {
       status: jest.fn().mockReturnThis(),
@@ -32,7 +33,7 @@ describe('verifyToken middleware', () => {
   });
 
   it('should return 403 if token is invalid', async () => {
-    (req.header as jest.Mock).mockReturnValue('Bearer invalidToken'); // Simular un token inválido
+    (req.header as jest.Mock).mockReturnValue('Bearer invalidToken'); 
 
     (jwt.verify as jest.Mock).mockImplementation(() =>
          {throw new Error("error")});
@@ -45,7 +46,7 @@ describe('verifyToken middleware', () => {
   });
 
   it('should call next if token is valid', async () => {
-    (jwt.verify as jest.Mock).mockReturnValue('mockedToken');
+    (jwt.verify as jest.Mock).mockReturnValue({email:'email'});
     (req.header as jest.Mock).mockReturnValue('Bearer mockedToken');
 
     await verifyToken(req as Request, res as Response, next);
