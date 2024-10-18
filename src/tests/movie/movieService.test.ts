@@ -107,3 +107,57 @@ describe("get movies by title", () => {
     await expect(movieService.getMoviesByTitle("title")).rejects.toThrow('Request failed');
   });
 })
+
+describe('getKeywordId', () => {
+
+  it('should return the correct keyword ID if keyword is found', async () => {
+    const mockKeyword = 'inception';
+    const mockResponse = {data:{
+      results: [
+        { id: 123, name: 'inception' },
+        { id: 456, name: 'incept' }
+      ]
+    }};
+    (axios.get as jest.Mock).mockResolvedValue(mockResponse);
+
+    const result = await movieService.getKeywordId(mockKeyword);
+
+    expect(result).toBe("123");  // Verificamos que la función devuelve el ID correcto
+  });
+
+  it('should return an empty string if keyword is not found', async () => {
+    const mockKeyword = 'nonexistent';
+    const mockResponse = {data:{ results: [] }};
+
+    (axios.get as jest.Mock).mockResolvedValue(mockResponse);
+
+    const result = await movieService.getKeywordId(mockKeyword);
+
+    expect(result).toBe('');  
+  });
+
+  it('should return an empty string if keyword does not match any result', async () => {
+    const mockKeyword = 'inception';
+    const mockResponse = {data:{
+      results: [
+        { id: 789, name: 'otherKeyword' }
+      ]
+    }};
+
+    // Simulamos que no coincide el keyword
+    (axios.get as jest.Mock).mockResolvedValue(mockResponse);
+
+    const result = await movieService.getKeywordId(mockKeyword);
+
+    expect(result).toBe(''); 
+  });
+
+  it('should throw a ServiceError if the request fails', async () => {
+    const mockKeyword = 'inception';
+
+    // Simulamos un error en la petición
+    (axios.get as jest.Mock).mockRejectedValue(new Error('Request failed'));
+
+    await expect(movieService.getKeywordId(mockKeyword)).rejects.toThrow(ServiceError);  // Verificamos que se lanza un ServiceError
+  });
+});

@@ -39,3 +39,29 @@ export const getMoviesByTitle = async (title: string) =>{
     throw new ServiceError(err.message);
   }
 }
+
+export const getKeywordId= async(keyword: any) =>{
+  let url = `https://api.themoviedb.org/3/search/keyword?query=${keyword}`;
+  const options = {
+    method: 'GET',
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${process.env.API_KEY}`,
+    }
+  };
+  try {
+    const response = await axios.get(url, options);
+    const result = response.data.results;
+    let keywordId ="";
+    if(result.length ===0)return keywordId;
+    result.forEach((posibleKeyword:any) => {
+      console.log(posibleKeyword, keyword);
+      if(posibleKeyword.name===keyword){
+        keywordId = ""+posibleKeyword.id;
+      }
+    });
+    return keywordId;
+  } catch (err: any) {
+    throw new ServiceError(err.message);
+  }
+}
