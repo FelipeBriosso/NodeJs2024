@@ -24,7 +24,9 @@ describe('getMovies', () => {
                 { title: 'Movie C' },
             ],
         };
-        (movieService.getMovies as jest.Mock).mockResolvedValue(mockMovies); // Resolve with mock data
+        // Resolve with mock data
+        (movieService.getKeywordId as jest.Mock).mockResolvedValue("keywordsIds");
+        (movieService.getMovies as jest.Mock).mockResolvedValue(mockMovies); 
 
         const sortedMovies: Movie[] = await movieLogic.getMovies(keyword);
 
@@ -39,7 +41,14 @@ describe('getMovies', () => {
         expect(sortedMovies[1].suggestionScore).toBeGreaterThanOrEqual(sortedMovies[2].suggestionScore || 0);
     });
 
+    test('should throw LogicError when no keywords found', async () => {
+        (movieService.getKeywordId as jest.Mock).mockResolvedValue(""); // Resolve with no movies
+
+        await expect(movieLogic.getMovies(keyword)).rejects.toThrow(LogicError);
+        await expect(movieLogic.getMovies(keyword)).rejects.toThrow("invalid keyword");
+    });
     test('should throw LogicError when no movies found', async () => {
+        (movieService.getKeywordId as jest.Mock).mockResolvedValue("keywordsIds");
         (movieService.getMovies as jest.Mock).mockResolvedValue({ results: [] }); // Resolve with no movies
 
         await expect(movieLogic.getMovies(keyword)).rejects.toThrow(LogicError);

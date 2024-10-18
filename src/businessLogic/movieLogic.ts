@@ -5,7 +5,11 @@ interface Movie {
     suggestionScore: number;
     
 }
-export const getMovies = async(keyword: string | null) =>{
+export const getMovies = async(keywordId: string | null) =>{
+    let keyword: string = await movieService.getKeywordId(keywordId);
+    if(!keyword){
+        throw new LogicError("invalid keyword");
+    }
     let apiSearch =await movieService.getMovies(keyword);
     let movieList: Movie[] = apiSearch.results;
     if(movieList.length===0){
