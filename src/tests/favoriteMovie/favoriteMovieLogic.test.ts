@@ -55,3 +55,43 @@ describe('postFavoriteMovie', () => {
 
     });
 });
+
+describe('getFavoriteMovies', () => {
+  const mockMovies = [
+    { id: 1, title: 'Inception', addedAt: '2023-10-17T00:00:00Z' },
+    { id: 2, title: 'Interstellar', addedAt: '2023-10-18T00:00:00Z' }
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks(); // Limpiar mocks antes de cada test
+  });
+
+  it('should return movies with suggestion score if movies are found', async () => {
+    // Mock de la función getUserMovies para devolver películas
+    (favoriteMovieService.getUserMovies as jest.Mock).mockResolvedValueOnce({user:"user",favoriteMovies:mockMovies});
+
+    // Llamada a la función a probar
+    const result = await favoriteMovieLogic.getFavoriteMovies('user@example.com');
+
+    // Verificar que getUserMovies fue llamada con el email correcto
+    expect(favoriteMovieService.getUserMovies).toHaveBeenCalledWith('user@example.com');
+
+    // verificar que no se perdieron elementos
+    expect(result).toHaveLength(2);
+    result.forEach(movie => {
+        expect(movie.suggestionForTodayScore).toBeDefined(); 
+    });
+    //verificar que esta ordenada
+    expect(result[0].suggestionForTodayScore).toBeGreaterThanOrEqual(result[1].suggestionForTodayScore);
+  });
+
+  it('should throw LogicError if no movies are found', async () => {
+    // Mock de la función getUserMovies para devolver una lista vacía
+
+    (favoriteMovieService.getUserMovies as jest.Mock).mockResolvedValueOnce(null);
+
+    // Verificar que se lanza un error de lógica si no se encuentran películas
+    await expect(favoriteMovieLogic.getFavoriteMovies('user@example.com')).rejects.toThrow(LogicError);
+    await expect(favoriteMovieLogic.getFavoriteMovies('user@example.com')).rejects.toThrow('movies not found');
+  });
+});

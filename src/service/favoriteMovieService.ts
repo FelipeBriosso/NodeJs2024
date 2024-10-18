@@ -48,6 +48,15 @@ export const saveFavoriteMovie = async(movie: FavoriteMovie) =>{
 	}
 };
 
+export const getUserMovies = async(email:string): Promise<any>=> {
+	try {
+		const movies = await getAllFavoriteMovies();
+		 return movies.find(user => user.userEmail === email) || null;
+		}catch(err: any){
+			throw new ServiceError(`Error getting the user: ${err.message}`); // Manejar cualquier error
+		}
+}
+
 const getAllFavoriteMovies = async() => {
 	let data: string = '';
 	try {
@@ -57,7 +66,6 @@ const getAllFavoriteMovies = async() => {
 			throw new ServiceError(`Error reading the file: ${err.message}`);
 		}
 	}
-
 	let movies: movie[] = [];
 
 	if (data) {
@@ -72,6 +80,5 @@ const getAllFavoriteMovies = async() => {
 			})
 			.filter(Boolean); 
 }
-console.log(movies);
 return movies;
 }

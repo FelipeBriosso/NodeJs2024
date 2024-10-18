@@ -157,3 +157,75 @@ describe('postFavoriteMovies', () => {
         expect(res.json).toHaveBeenCalledWith({ message: 'Error saving a new favorite movie', error: unexpectedError });
     });
 });
+
+
+describe('getFavoriteMovies', () => {
+  let req: Partial<Request>;
+  let res: Partial<Response>;
+  let mockJson: jest.Mock;
+  let mockStatus: jest.Mock;
+
+  beforeEach(() => {
+    mockJson = jest.fn();
+    mockStatus = jest.fn(() => ({ json: mockJson }));
+
+    // Simulando el objeto req y res
+    req = {
+      body: {
+        email: 'user@example.com'
+      }
+    };
+
+    res = {
+      status: mockStatus as any
+    };
+
+    jest.clearAllMocks(); // Limpiar mocks antes de cada test
+  });
+
+  it('should return user favorite movies if found', async () => {
+    const mockMovies = [
+      { id: 1, title: 'Inception', addedAt: '2023-10-17T00:00:00Z' },
+      { id: 2, title: 'Interstellar', addedAt: '2023-10-18T00:00:00Z' }
+    ];
+
+    // Simulando la respuesta de la lógica de negocio
+    (favoriteMovieLogic.getFavoriteMovies as jest.Mock).mockResolvedValueOnce(mockMovies);
+
+    // Llamada a la función
+    await favoriteMovieController.getFavoriteMovies(req as Request, res as Response);
+
+    // Verificaciones
+    expect(favoriteMovieLogic.getFavoriteMovies).toHaveBeenCalledWith('user@example.com');
+    expect(res.status).toHaveBeenCalledWith(201);
+    expect(mockJson).toHaveBeenCalledWith(mockMovies);
+  });
+
+  it('should return 204 if no favorite movies found (LogicError)', async () => {
+    // Simulando un error de lógica (sin películas)
+    const logicError = new LogicError('No favorite movies found');
+    (favoriteMovieLogic.getFavoriteMovies as jest.Mock).mockRejectedValueOnce(logicError);
+
+    // Llamada a la función
+    await favoriteMovieController.getFavoriteMovies(req as Request, res as Response);
+
+    // Verificaciones
+    expect(favoriteMovieLogic.getFavoriteMovies).toHaveBeenCalledWith('user@example.com');
+    expect(res.status).toHaveBeenCalledWith(204);
+    expect(mockJson).toHaveBeenCalledWith(logicError.message);
+  });
+
+  it('should return 500 for any other error', async () => {
+    const serverError = new Error('Something went wrong');
+    (favoriteMovieLogic.getFavoriteMovies as jest.Mock).mockRejectedValueOnce(serverError);
+
+    // Llamada a la función
+    await favoriteMovieController.getFavoriteMovies(req as Request, res as Response);
+
+    // Verificaciones
+    expect(favoriteMovieLogic.getFavoriteMovies).toHaveBeenCalledWith('user@example.com');
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(mockJson).toHaveBeenCalledWith('Something went wrong');
+  });
+});
+

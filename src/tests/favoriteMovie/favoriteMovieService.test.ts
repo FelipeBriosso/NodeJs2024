@@ -5,6 +5,7 @@ import { FavoriteMovie } from '../../domain/favoriteMovie';
 
 jest.mock('fs/promises');  // Mock de las funciones de fs
 
+
 describe('saveFavoriteMovie', () => {
   let mockMovie: FavoriteMovie;
   const mockDate = new Date('2023-10-17T00:00:00Z');
@@ -129,5 +130,50 @@ describe('saveFavoriteMovie', () => {
     (fs.readFile as jest.Mock).mockRejectedValueOnce(new Error('File read error'));
 
     await expect(favoriteMovieService.saveFavoriteMovie(mockMovie)).rejects.toThrow('Error reading the file: File read error');
+  });
+});
+
+describe('getUserMovies', () => {
+  const mockMovies =
+    { userEmail: 'user1@example.com', favoriteMovies: [{ id: 1, title: 'Inception', addedAt: '2023-10-17T00:00:00Z' }] };
+
+  beforeEach(() => {
+    jest.clearAllMocks();  // Limpiar mocks antes de cada test
+  });
+
+  it('should return user movies if user exists', async () => {
+    // Mock de fs.readFile para devolver usuarios con películas
+    (fs.readFile as jest.Mock).mockResolvedValueOnce(JSON.stringify(mockMovies));
+
+    // Llamada a la función a probar
+    const result = await favoriteMovieService.getUserMovies('user1@example.com');
+
+    // Verificar que fs.readFile fue llamada
+    expect(fs.readFile).toHaveBeenCalledWith('./favoritos.txt', 'utf8');
+
+    // Verificar que se devuelven las películas correctas para el usuario
+    expect(result).toEqual(mockMovies);
+  });
+
+  it('should return null if user does not exist', async () => {
+    // Mock de fs.readFile para devolver usuarios con películas
+    (fs.readFile as jest.Mock).mockResolvedValueOnce(JSON.stringify(mockMovies));
+
+    // Llamada a la función a probar con un email que no existe en los datos
+    const result = await favoriteMovieService.getUserMovies('nonexistent@example.com');
+
+    // Verificar que fs.readFile fue llamada
+    expect(fs.readFile).toHaveBeenCalledWith('./favoritos.txt', 'utf8');
+
+    // Verificar que se devuelve null si no se encuentra el usuario
+    expect(result).toBeNull();
+  });
+
+  it('should throw ServiceError if there is an error while getting movies', async () => {
+    (fs.readFile as jest.Mock).mockRejectedValue(new Error('reading error'));
+
+    await expect(favoriteMovieService.getUserMovies('user1@example.com')).rejects.toThrow(ServiceError);
+    await expect(favoriteMovieService.getUserMovies('user1@example.com')).rejects.toThrow('Error getting the user: Error reading the file: reading error');
+
   });
 });
