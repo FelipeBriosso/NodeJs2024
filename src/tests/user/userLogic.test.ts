@@ -3,10 +3,16 @@ import * as service from '../../service/userService';
 import {User} from '../../domain/user';
 import { LogicError } from '../../utils/errors';
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+
 
 jest.mock('../../service/userService');
 jest.mock('jsonwebtoken', () => ({
   sign: jest.fn(),
+}));
+jest.mock('bcrypt', () => ({
+  hash: jest.fn(),
+  compare: jest.fn(),
 }));
 
 describe('createUser', () => {
@@ -17,6 +23,9 @@ describe('createUser', () => {
             'jhon',
             'doe'
         );
+        
+        (bcrypt.hash as jest.Mock).mockResolvedValue(newUser.password);
+        (bcrypt.compare as jest.Mock).mockResolvedValue(true);
         (service.createUser as jest.Mock).mockResolvedValue(newUser);
         const result = await logic.createUser(newUser);
         expect(result.email).toBe(newUser.email);
@@ -38,7 +47,8 @@ describe('getUser', () => {
   
     it('should return the user information if the user email and password are correct', async () => {
       // Simular que el servicio devuelve un usuario válido
-
+      (bcrypt.hash as jest.Mock).mockResolvedValue(mockUser.password);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
       (service.getUser as jest.Mock).mockResolvedValue(mockUser);
       (jwt.sign as jest.Mock).mockReturnValue('mockedToken');
       const result = await logic.getUser('test@example.com', 'securePassword123');
@@ -52,6 +62,8 @@ describe('getUser', () => {
     });
   
     it('should throw an error if the password is wrong', async () => {
+      (bcrypt.hash as jest.Mock).mockResolvedValue('hashedPassword');
+      (bcrypt.compare as jest.Mock).mockResolvedValue(false);
       (service.getUser as jest.Mock).mockResolvedValue(mockUser);
   
       await expect(logic.getUser('test@example.com', 'wrongPassword')).rejects.toThrow(LogicError);
@@ -60,8 +72,9 @@ describe('getUser', () => {
     });
   
     it('should throw an error if no user is found', async () => {
-
-       (service.getUser as jest.Mock).mockResolvedValue(null);
+      (bcrypt.hash as jest.Mock).mockResolvedValue(mockUser.password);
+      (bcrypt.compare as jest.Mock).mockResolvedValue(true);
+      (service.getUser as jest.Mock).mockResolvedValue(null);
        try{
         await logic.getUser('nonexistent@example.com', 'somePassword');
        }catch(error: any){

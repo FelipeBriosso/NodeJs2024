@@ -3,9 +3,14 @@ import * as userService  from "../service/userService";
 import { LogicError } from "../utils/errors";
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 dotenv.config();
-export const createUser = async(newUser: User) =>{
+const saltRounds = 8; // Este número representa la complejidad del algoritmo (más alto, más seguro pero más lento) 8 prioriza el rendimiento
 
+export const createUser = async(newUser: User) =>{
+    console.log(newUser.password);
+    const hashedPassword = await hashPassword(newUser.password);
+    newUser.password = hashedPassword;
     const finalUser = await userService.createUser(newUser);
     return {email: finalUser.email, firstname: finalUser.firstname, lastname: finalUser.lastname};
 }
@@ -15,7 +20,8 @@ export const getUser = async (email:string, password:string) => {
     if(!user){
         throw new LogicError("No user found");
     }
-    if(!(user.password===password)){
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if(!isPasswordCorrect){
         throw new LogicError("wrong password");
     }
     const token = jwt.sign(
@@ -24,4 +30,10 @@ export const getUser = async (email:string, password:string) => {
         { expiresIn: '2h' }
     );
     return {token: token, email: user.email, firstname: user.firstname, lastname: user.lastname};
+}
+
+
+async function hashPassword(plainPassword: string) {
+  const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
+  return hashedPassword;
 }
