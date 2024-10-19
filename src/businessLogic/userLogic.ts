@@ -31,7 +31,8 @@ export const getUser = async (email:string, password:string) => {
     return {token: token, email: user.email, firstname: user.firstname, lastname: user.lastname};
 }
 export const invalidateToken= async(token: any) =>{
-    throw new Error('Function not implemented.');
+   const invalidToken = await userService.invalidateToken(token);
+   return invalidToken;
 }
 
 async function hashPassword(plainPassword: string) {

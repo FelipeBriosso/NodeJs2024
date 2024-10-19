@@ -2,6 +2,7 @@ import { User } from "../domain/user";
 import fs from 'fs/promises'; // Usamos las funciones basadas en promesas de fs
 import { ServiceError } from "../utils/errors";
 const rutaArchivo = './usuarios.txt';
+
 export const createUser = async (user: User) => {
     try {
         const savedUsers = await getAllUsers();
@@ -26,6 +27,9 @@ export const getUser= async(email:string) =>{
     }catch(err: any){
         throw new ServiceError(`Error getting the user: ${err.message}`); // Manejar cualquier error
     }
+}
+export const invalidateToken = async(token:string) =>{
+    throw new Error("not implemented");
 }
 
 const getAllUsers = async() => {
