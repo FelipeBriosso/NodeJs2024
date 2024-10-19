@@ -1,0 +1,2 @@
+{"userEmail":"briossofelipe@gmail.com","favoriteMovies":[{"id":1210794,"title":"Trouble","addedAt":"2024-10-19T18:06:03.084Z"},{"id":933260,"title":"The Substance","addedAt":"2024-10-19T18:07:53.120Z"}]}
+{"userEmail":"tester@testing.com","favoriteMovies":[{"id":933260,"title":"The Substance","addedAt":"2024-10-19T18:08:33.000Z"}]}

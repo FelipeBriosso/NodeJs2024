@@ -8,7 +8,6 @@ dotenv.config();
 const saltRounds = 8; // Este número representa la complejidad del algoritmo (más alto, más seguro pero más lento) 8 prioriza el rendimiento
 
 export const createUser = async(newUser: User) =>{
-    console.log(newUser.password);
     const hashedPassword = await hashPassword(newUser.password);
     newUser.password = hashedPassword;
     const finalUser = await userService.createUser(newUser);
