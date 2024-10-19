@@ -1,3 +1,1 @@
-{"email":"email@yo.com","password":"SecretPs1234","firstname":"1","lastname":"1"}
-{"email":"email2@yo.com","password":"SecretPs1234","firstname":"1","lastname":"1"}
-{"email":"email3@yo.com","password":"SecretPs1234","firstname":"1","lastname":"1"}
+{"email":"briossofelipe@gmail.com","password":"$2b$08$lnFBB02WYubzZzthY1F7Euogq5V.qZaSGMaUf.cNN396rJkbDeZ42","firstname":"Felipe","lastname":"Briosso"}

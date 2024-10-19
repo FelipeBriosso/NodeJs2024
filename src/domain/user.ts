@@ -23,9 +23,9 @@ export class User{
     }
 
     isValidPassword(password: string) {
-    return password.length >= 8 
-    && /\d/.test(password) 
-    && /[A-Z]/.test(password);
+    return password.length >= 8 //minimo largo
+    && /\d/.test(password)      //al menos 1 numero
+    && /[A-Z]/.test(password);  //al menos 1 mayuscula
     }
     isValidName(name: string) {
         return name !=="";
