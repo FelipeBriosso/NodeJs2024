@@ -55,7 +55,6 @@ export const getKeywordId= async(keyword: any) =>{
     let keywordId ="";
     if(result.length ===0)return keywordId;
     result.forEach((posibleKeyword:any) => {
-      console.log(posibleKeyword, keyword);
       if(posibleKeyword.name===keyword){
         keywordId = ""+posibleKeyword.id;
       }

@@ -13,7 +13,6 @@ export const getMovies = async(keywordId: string | null) =>{
             throw new LogicError("invalid keyword");
         }
     }
-
     let apiSearch =await movieService.getMovies(keyword);
     let movieList: Movie[] = apiSearch.results;
     if(movieList.length===0){

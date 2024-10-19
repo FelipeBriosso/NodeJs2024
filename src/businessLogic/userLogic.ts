@@ -30,9 +30,13 @@ export const getUser = async (email:string, password:string) => {
     );
     return {token: token, email: user.email, firstname: user.firstname, lastname: user.lastname};
 }
-
+export const invalidateToken= async(token: any) =>{
+    throw new Error('Function not implemented.');
+}
 
 async function hashPassword(plainPassword: string) {
   const hashedPassword = await bcrypt.hash(plainPassword, saltRounds);
   return hashedPassword;
 }
+
+
