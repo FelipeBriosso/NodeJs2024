@@ -1,9 +1,9 @@
 // Importar las dependencias
-import { createUser, getUser } from '../../service/userService'; // Ajusta la ruta según la estructura del proyecto
+import { createUser, getUser, invalidateToken,sessionIsValid } from '../../service/userService'; 
 import { User } from '../../domain/user';
 import { ServiceError } from '../../utils/errors';
 import fs from 'fs/promises';
-import { use } from 'chai';
+
 
 // Mockear las funciones de fs/promises
 jest.mock('fs/promises');
@@ -104,3 +104,94 @@ describe('getUser', () => {
       });
 });
 
+describe('invalidateToken', () => {
+    const mockToken = 'abc123';
+    const blacklistRoute = './blacklist.txt';
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    it('should throw an error if the token is already banned', async () => {
+        // Mock para simular que el token ya está en la lista negra
+        (fs.readFile as jest.Mock).mockResolvedValue(JSON.stringify(mockToken) + '\n');
+
+        await expect(invalidateToken(mockToken)).rejects.toThrow('the token was already banned');
+        expect(fs.readFile).toHaveBeenCalledWith(blacklistRoute, 'utf8');
+    });
+
+    it('should add the token if it is not banned', async () => {
+        // Mock para simular que no hay tokens baneados
+        (fs.readFile as jest.Mock).mockResolvedValue('');
+
+        await invalidateToken(mockToken);
+
+        expect(fs.appendFile).toHaveBeenCalledWith(blacklistRoute, JSON.stringify(mockToken) + '\n');
+        expect(fs.readFile).toHaveBeenCalledWith(blacklistRoute, 'utf8');
+    });
+
+    it('should throw an error if reading the blacklist fails for non-ENOENT error', async () => {
+        // Mock para simular que leer el archivo lanza un error
+        (fs.readFile as jest.Mock).mockRejectedValue({ code: 'EACCES', message: 'Permission denied' });
+
+        await expect(invalidateToken(mockToken)).rejects.toThrow("Error reading the file: Permission denied");
+        expect(fs.readFile).toHaveBeenCalledWith(blacklistRoute, 'utf8');
+    });
+
+    it('should not throw an error if the blacklist file does not exist (ENOENT)', async () => {
+        // Mock para simular que el archivo no existe
+        (fs.readFile as jest.Mock).mockRejectedValue({ code: 'ENOENT' });
+
+        await invalidateToken(mockToken);
+
+        expect(fs.appendFile).toHaveBeenCalledWith(blacklistRoute, JSON.stringify(mockToken) + '\n');
+    });
+
+    it('should throw an error if appendFile fails', async () => {
+        // Mock para simular que la función `appendFile` lanza un error
+        (fs.readFile as jest.Mock).mockResolvedValue('');
+        (fs.appendFile as jest.Mock).mockRejectedValue(new Error('Disk is full'));
+
+        await expect(invalidateToken(mockToken)).rejects.toThrow('Error adding token to the blacklist: Disk is full');
+        expect(fs.readFile).toHaveBeenCalledWith(blacklistRoute, 'utf8');
+        expect(fs.appendFile).toHaveBeenCalledWith(blacklistRoute, JSON.stringify(mockToken) + '\n');
+    });
+      it('should ignored the corrupted lines and insert the user anyways', async () => {
+    const corruptLine = 'corrupted line';
+    const validToken = "validToken";
+    (fs.readFile as jest.Mock).mockResolvedValue(`${corruptLine}\n${JSON.stringify(validToken)}\n`);
+    (fs.appendFile as jest.Mock).mockResolvedValue(undefined);
+
+    const result = await invalidateToken(mockToken);
+
+    expect(fs.readFile).toHaveBeenCalledWith(blacklistRoute, 'utf8');
+    expect(fs.appendFile).toHaveBeenCalledWith(blacklistRoute, JSON.stringify(mockToken) + '\n');
+    expect(result).toEqual(mockToken);
+  });
+
+});
+
+describe('validate Token', () => {
+  const mockToken = 'abc123';
+    const blacklistRoute = './blacklist.txt';
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+  it('should return false if the token is already banned', async () => {
+    // Mock para simular que el token ya está en la lista negra
+    (fs.readFile as jest.Mock).mockResolvedValue(JSON.stringify(mockToken)+ '\n');
+
+    const isvalid = await sessionIsValid(mockToken);
+    expect(fs.readFile).toHaveBeenCalledWith(blacklistRoute, 'utf8');
+    expect(isvalid).toBe(false);
+});
+it('should return true if the token was not banned', async () => {
+  // Mock para simular que el token ya está en la lista negra
+  (fs.readFile as jest.Mock).mockResolvedValue('');
+
+  const isvalid = await sessionIsValid(mockToken);
+  expect(fs.readFile).toHaveBeenCalledWith(blacklistRoute, 'utf8');
+  expect(isvalid).toBe(true);
+});
+});

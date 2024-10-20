@@ -1,13 +1,15 @@
 import jsonwebtoken from "jsonwebtoken";
 import dotenv from 'dotenv';
 import { Request, Response } from 'express';
+import {sessionIsValid} from '../service/userService';
 dotenv.config();
 export const verifyToken = async (req: Request, res: Response, next: any): Promise<void> => {
     const authorization = req.header("Authorization");
     const sessionToken = authorization
       ? authorization.replace("Bearer ", "")
       : null;
-    if (!sessionToken) {
+
+    if (!sessionToken || !(await sessionIsValid(sessionToken))) {
       res.status(401).json("authentication is required");
       return;
     }
