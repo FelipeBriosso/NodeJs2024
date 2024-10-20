@@ -58,3 +58,23 @@ export const login = async(req: Request, res: Response) =>{
         return;
     }
 }
+
+export const logout = async(req: Request, res: Response) =>{
+  const token = req.body.token;
+  try{
+  const invalidToken = await userLogic.invalidateToken(token);
+  res
+    .status(201)
+    .json(invalidToken);
+  }catch(error:any){
+    if(error instanceof ServiceError){
+        res
+            .status(404)
+            .json(error.message);
+        return;
+    }
+    res
+        .status(500)
+        .json(error.message);
+  }
+}
