@@ -45,8 +45,9 @@ export const invalidateToken = async(token:string) =>{
 }
 export const sessionIsValid = async(token:string) => {
     const bannedTokens = await getBlackList();
-    const bannedToken = bannedTokens.some(u => u= token);
+    const bannedToken = bannedTokens.some(u => u=== token);
     if (bannedToken) {
+
       return false;
     }
     return true;

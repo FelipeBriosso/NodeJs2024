@@ -1,0 +1,401 @@
+{
+	"info": {
+		"_postman_id": "e906492e-6c0c-4767-9ab9-591179d25778",
+		"name": "CodigoDelSur",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30295544",
+		"_collection_link": "https://orange-equinox-804041.postman.co/workspace/My-Workspace~b3a32e31-d2bd-4581-8ada-7725eefd5f35/collection/30295544-e906492e-6c0c-4767-9ab9-591179d25778?action=share&source=collection_link&creator=30295544"
+	},
+	"item": [
+		{
+			"name": "Good",
+			"item": [
+				{
+					"name": "movies with keyword",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0aW5nLmNvbSIsImlhdCI6MTcyOTY4NTU0NCwiZXhwIjoxNzI5NjkyNzQ0fQ.VvH0I-4O_wrQ8Cs6atWpGdJOV1jqO3nzU_LkmP_4yCg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/movies/car",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								"car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "movies without keyword",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0aW5nLmNvbSIsImlhdCI6MTcyOTY4NTU0NCwiZXhwIjoxNzI5NjkyNzQ0fQ.VvH0I-4O_wrQ8Cs6atWpGdJOV1jqO3nzU_LkmP_4yCg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/movies/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"movies",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester@testing.com\",\r\n\"password\":\"Test123PS\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester@testing.com\",\r\n\"password\":\"Test123PS\",\r\n\"firstname\":\"test\",\r\n\"lastname\":\"testing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favoriteMovie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0aW5nLmNvbSIsImlhdCI6MTcyOTY4NTU0NCwiZXhwIjoxNzI5NjkyNzQ0fQ.VvH0I-4O_wrQ8Cs6atWpGdJOV1jqO3nzU_LkmP_4yCg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 517814,\r\n    \"title\": \"Capernaum\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/favoritemovies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"favoritemovies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favorieMovies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0aW5nLmNvbSIsImlhdCI6MTcyOTY4NTU0NCwiZXhwIjoxNzI5NjkyNzQ0fQ.VvH0I-4O_wrQ8Cs6atWpGdJOV1jqO3nzU_LkmP_4yCg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/favoritemovies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"favoritemovies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0aW5nLmNvbSIsImlhdCI6MTcyOTQzNzk5MCwiZXhwIjoxNzI5NDQ1MTkwfQ.bHOtMwnewA5NJ4ksxMZSotfuY9lBuXjRtZVvtjygZuE\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "bad",
+			"item": [
+				{
+					"name": "register bad email",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester\",\r\n\"password\":\"Test123PS\",\r\n\"firstname\":\"test\",\r\n\"lastname\":\"testing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register bad password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester@testing.com\",\r\n\"password\":\"Test123PS\",\r\n\"firstname\":\"test\",\r\n\"lastname\":\"testing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register bad firstname",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester@testing.com\",\r\n\"password\":\"Test123PS\",\r\n\"firstname\":\"\",\r\n\"lastname\":\"testing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register bad lastname",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"tester@testing.com\",\r\n\"password\":\"Test123PS\",\r\n\"firstname\":\"test\",\r\n\"lastname\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login bad nonExsisting User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\":\"User@nonexisting.com\",\r\n\"password\":\"SecretPs1234\",\r\n\"firstname\":\"1\",\r\n\"lastname\":\"1\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "favoriteMovie wrong movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0aW5nLmNvbSIsImlhdCI6MTcyOTY4NTU0NCwiZXhwIjoxNzI5NjkyNzQ0fQ.VvH0I-4O_wrQ8Cs6atWpGdJOV1jqO3nzU_LkmP_4yCg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 50000,\r\n    \"title\": \"Capernaum\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/favoritemovies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"favoritemovies"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "keyword",
+			"value": "car"
+		}
+	]
+}

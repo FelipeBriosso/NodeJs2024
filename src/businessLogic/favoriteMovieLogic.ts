@@ -11,7 +11,7 @@ interface favoriteMovie{
 export const postFavoriteMovie = async (movie: FavoriteMovie) => {
     const posibleMovies: any[] = await movieService.getMoviesByTitle(movie.title);
     if(!isValidMovie(movie,posibleMovies)){
-        throw new LogicError("could not find movie with id and title");
+        throw new LogicError("could not find movie with that id and title");
     }
     const savedMovie: FavoriteMovie = await favoriteMovieService.saveFavoriteMovie(movie);
     return {id:savedMovie.id, title:savedMovie.title, addedAt:savedMovie.addedAt};
