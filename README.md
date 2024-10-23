@@ -27,11 +27,11 @@ si el problema persiste seguir los siguientes pasos:
 Se cuenta con una arquitectura monolitica sencilla que busca cumplir con todos los requerimientos dados por letra.
 
 ### Diagrama de componentes
-![diagrama de componentes](../NodeJs2024/Documentacion/Componentes.png)
+![diagrama de componentes](./Documentacion/Componentes.png)
 
 Para poder cumplir con el requerimiento de "GET movies" se conectó el monolito a través de la librería axios con un proveedor externo por medio de http.
 
-![diagrama de descomposición](../NodeJs2024/Documentacion/Descomposicion.png)
+![diagrama de descomposición](./Documentacion/Descomposicion.png)
 
 Como se menciono anteriormente se busco priorizar la simplicidad de la aplicación. Separando el codigo para favorecer la modificabilidad. 
 
@@ -46,7 +46,7 @@ Como se menciono anteriormente se busco priorizar la simplicidad de la aplicaci�
 | src/domain | módulo que contiene el corportamiento de los objetos del sistema |
 
 
-![diagrama de uso](../NodeJs2024/Documentacion/uso.png)
+![diagrama de uso](./Documentacion/uso.png)
 
 A partir de este diagrama podemos ver que se tiene una arquitectura basada en layers (o capas), que nuevamente, se hizo para favorecer la modificabilidad como principal atributo de calidad.
 
