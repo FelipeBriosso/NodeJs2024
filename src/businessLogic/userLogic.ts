@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import bcrypt from 'bcrypt';
 dotenv.config();
-const saltRounds: any = process.env.BCRYPT_LEVEL; // Este número representa la complejidad del algoritmo (más alto, más seguro pero más lento)
+const saltRounds: any = Number(process.env.BCRYPT_LEVEL); // Este número representa la complejidad del algoritmo (más alto, más seguro pero más lento)
 
 export const createUser = async(newUser: User) =>{
     const hashedPassword = await hashPassword(newUser.password);

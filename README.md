@@ -55,7 +55,7 @@ A partir de este diagrama podemos ver que se tiene una arquitectura basada en la
 ## Cumplimiento de los requerimientos funcionales y opcionales
 
    >Los endPoints se encuentran adjuntados con casos de prueba en el root del repositorio por medio de una colección de postman.
- 
+   Se separan en casos good y bad, no todos los casos bad se encuentran adjuntados. Aquellos errores que dependen de datos precargados (como por ejemplo no registrar 2 veces al mismo usuario) no se encuentran en un apartado en particular, pero fueron testeados y funcionan como se espera y pueden ser probados. A su vez para poder testear aquellos requerimientos que requieran de un token, este se debe extraer de la respuesta del login.
 
 ### RF1 + opcional de validación
 
