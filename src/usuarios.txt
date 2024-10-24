@@ -1,0 +1,2 @@
+{"email":"briossofelipe@gmail.com","password":"$2b$08$lnFBB02WYubzZzthY1F7Euogq5V.qZaSGMaUf.cNN396rJkbDeZ42","firstname":"Felipe","lastname":"Briosso"}
+{"email":"tester@testing.com","password":"$2b$08$7RbGpUzilyy/MYqge8hcf.yV4PzCSyCO0k954rKxW73EaFqYZAw76","firstname":"test","lastname":"testing"}
